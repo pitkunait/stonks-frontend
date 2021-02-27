@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TransactionService } from '../shared/services/transaction.service';
+import { TransactionService } from '../../core/services/transaction.service';
 
 
 @Component({
@@ -9,14 +9,13 @@ import { TransactionService } from '../shared/services/transaction.service';
 })
 export class HomeComponent implements OnInit {
 
+    public assets: any = [];
+
     constructor(private transactionService: TransactionService) { }
 
     ngOnInit(): void {
         this.transactionService.load().subscribe((res) => {
-
-            console.log(res);
-
-
+            this.assets = res;
 
         });
     }
