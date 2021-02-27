@@ -1,0 +1,48 @@
+<section>
+    <header>
+        Organizer: <strong>{{dateService.date | async | moment:'DD.MM.YYYY'}}</strong>
+        <hr/>
+    </header>
+
+    <main>
+        <ul>
+            <li class="task" *ngFor="let transaction of transactions; let i = index">
+                <div>
+                    <span>
+                        <strong>
+                            {{ i + 1}}
+                        </strong>
+                        {{ transaction.title }}
+                    </span>
+                    <p>
+                         Amount: {{ transaction.amount }} EUR
+                    </p>
+                    <p>
+                         Currency: {{ transaction.amount }}
+                    </p>
+                </div>
+                <button class="btn btn-primary" (click)="remove(transaction)">
+                    Remove
+                </button>
+            </li>
+        </ul>
+    </main>
+    <footer>
+        <form (ngSubmit)="submit()" [formGroup]="form">
+            <label>
+                Title:
+                <input type="text" formControlName="title">
+            </label>
+            <label>
+                Amount:
+                <input type="number" formControlName="amount">
+            </label>
+            <button
+                type="submit"
+                [disabled]="form.invalid"
+                class="btn btn-primary btn-block">
+                Add
+            </button>
+        </form>
+    </footer>
+</section>
