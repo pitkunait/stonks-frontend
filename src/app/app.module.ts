@@ -14,13 +14,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         AppComponent,
     ],
     imports: [
+        RouterModule.forRoot(routes),
         BrowserModule,
         BrowserAnimationsModule,
-        RouterModule.forRoot(routes),
         LayoutModule,
         CoreModule,
         SharedModule,
     ],
-    bootstrap: [AppComponent],
+    bootstrap: [
+        AppComponent,
+    ],
 })
 export class AppModule {}

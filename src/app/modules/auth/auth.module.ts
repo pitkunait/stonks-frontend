@@ -4,7 +4,6 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { RouterModule } from '@angular/router';
 import { authRoutes as routes } from './auth.routes';
-import { CommonModule } from '@angular/common';
 
 
 @NgModule({
@@ -13,8 +12,8 @@ import { CommonModule } from '@angular/common';
         SignupComponent,
     ],
     imports: [
-        CommonModule,
         RouterModule.forChild(routes),
-        SharedModule],
+        SharedModule,
+    ],
 })
 export class AuthModule { }

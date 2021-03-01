@@ -4,8 +4,14 @@ import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
-    declarations: [NavbarComponent],
-    imports: [SharedModule],
-    exports: [NavbarComponent],
+    declarations: [
+        NavbarComponent,
+    ],
+    imports: [
+        SharedModule,
+    ],
+    exports: [
+        NavbarComponent,
+    ],
 })
 export class LayoutModule {}
