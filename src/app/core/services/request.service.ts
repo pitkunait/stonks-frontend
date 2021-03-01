@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
+import { TokenService } from './token.service';
+
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class RequestService {
 
-  constructor() { }
+    constructor(private tokenService: TokenService) { }
+
+
+
+
 }

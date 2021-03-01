@@ -1,17 +1,74 @@
 import { Injectable } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { TokenService } from '../services/token.service';
+import { catchError, filter, finalize, switchMap, take } from 'rxjs/operators';
 
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
+    private AUTH_HEADER = 'Authorization';
+    private refreshTokenInProgress = false;
+    private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
-    private prefix = 'http://0.0.0.0:8000/api';
+    constructor(private tokenService: TokenService, private httpClient: HttpClient) {}
 
-    constructor() {}
+    intercept(req: HttpRequest<any>, next: HttpHandler): any {
 
-    intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-        const apiReq = request.clone({ url: `${this.prefix}/${request.url}` });
-        return next.handle(apiReq);
+        if (!req.headers.has('Content-Type')) {
+            req = req.clone({
+                headers: req.headers.set('Content-Type', 'application/json'),
+            });
+        }
+
+        req = this.addAuthenticationToken(req);
+
+        return next
+            .handle(req)
+            .pipe(catchError((error: HttpErrorResponse) => {
+                    if (error && error.status === 401) {
+                        if (this.refreshTokenInProgress) {
+                            return this.refreshTokenSubject.pipe(
+                                filter(result => result !== null),
+                                take(1),
+                                switchMap(() => next.handle(this.addAuthenticationToken(req))),
+                            );
+                        } else {
+                            this.refreshTokenInProgress = true;
+                            this.refreshTokenSubject.next(null);
+                            return this.refreshAccessToken().pipe(
+                                switchMap((res: any) => {
+                                    this.tokenService.setAccessToken(res.access);
+                                    this.refreshTokenSubject.next(res);
+                                    return next.handle(this.addAuthenticationToken(req));
+                                }),
+                                finalize(() => this.refreshTokenInProgress = false),
+                            );
+                        }
+                    } else {
+                        return throwError(error);
+                    }
+                }),
+            );
     }
+
+    private refreshAccessToken(): Observable<any> {
+        return this.httpClient
+            .post('http://0.0.0.0:8000/api/token/refresh/', { refresh: this.tokenService.getRefreshToken() });
+    }
+
+    private addAuthenticationToken(request: HttpRequest<any>): HttpRequest<any> {
+        if (!this.tokenService.hasToken()) {
+            return request;
+        }
+        // // If you are calling an outside domain then do not add the token.
+        // if (!request.url.match(/www.mydomain.com\//)) {
+        //     return request;
+        // }
+        console.log(`Setting token ${this.tokenService.getAccessToken()}`);
+        return request.clone({
+            headers: request.headers.set(this.AUTH_HEADER, 'Bearer ' + this.tokenService.getAccessToken()),
+        });
+    }
+
 }

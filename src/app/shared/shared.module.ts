@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MomentPipe } from './pipes/moment.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AppMaterialModule } from '../modules/app-material.module';
+import { AppMaterialModule } from '../app-material.module';
+import { CoreModule } from '../core/core.module';
 
 
 @NgModule({
@@ -10,12 +11,9 @@ import { AppMaterialModule } from '../modules/app-material.module';
         MomentPipe,
     ],
     exports: [
-        MomentPipe
+        MomentPipe,
+        CoreModule
     ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        AppMaterialModule,
-    ],
+    imports: [CoreModule],
 })
 export class SharedModule {}

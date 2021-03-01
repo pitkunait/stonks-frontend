@@ -9,14 +9,19 @@ import { TransactionService } from './services/transaction.service';
 export class DashboardComponent implements OnInit {
 
 
-    public assets: any = [];
+    public transactions: any = [];
 
     constructor(private transactionService: TransactionService) { }
 
     ngOnInit(): void {
-        this.transactionService.load().subscribe((res) => {
-            this.assets = res;
+        this.transactionService
+            .loadTransactions()
+            .subscribe(this.setTransactions);
 
-        });
+    }
+
+    private setTransactions(transactions) {
+        this.transactions = transactions;
+        console.log(this.transactions);
     }
 }

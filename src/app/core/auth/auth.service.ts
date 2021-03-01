@@ -12,7 +12,7 @@ import { TokenPair } from '../interfaces/tokenPair';
 })
 export class AuthService {
     public loggedIn = new BehaviorSubject<boolean>(false);
-    private url = 'token/';
+    private url = 'http://0.0.0.0:8000/api/token/';
 
     constructor(
         private http: HttpClient,
@@ -31,7 +31,7 @@ export class AuthService {
                 .subscribe(async (res: TokenPair) => {
                     this.tokenService.setTokenPair(res);
                     this.loggedIn.next(true);
-                    await this.router.navigate(['/']);
+                    await this.router.navigate(['/dashboard']);
                 });
         }
     }

@@ -1,14 +1,15 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { EnsureModuleLoadedOnceGuard } from './guards/ensureModuleLoadedOnce.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AppMaterialModule } from '../modules/app-material.module';
+import { AppMaterialModule } from '../app-material.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
 import { ApiInterceptor } from './interceptors/api.interceptor';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { AppRoutingModule } from '../app-routing.module';
 
 
 @NgModule({
@@ -18,19 +19,25 @@ import { ApiInterceptor } from './interceptors/api.interceptor';
         NavbarComponent
     ],
     imports: [
-        CommonModule,
-        ReactiveFormsModule,
         AppMaterialModule,
+        ReactiveFormsModule,
         HttpClientModule,
-        RouterModule
+        RouterModule,
+        AppRoutingModule,
+        CommonModule,
     ],
-    providers: [{
-        provide: HTTP_INTERCEPTORS,
-        useClass: ApiInterceptor,
-        multi: true,
-    }],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true, },
+
+    ],
     exports: [
-        NavbarComponent
+        NavbarComponent,
+        AppMaterialModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        HttpClientModule,
+        RouterModule,
+        CommonModule,
     ]
 })
 export class CoreModule extends EnsureModuleLoadedOnceGuard {

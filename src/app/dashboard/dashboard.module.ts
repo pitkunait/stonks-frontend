@@ -6,10 +6,11 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { OrganizerComponent } from './components/organizer/organizer.component';
 import { SelectorComponent } from './components/selector/selector.component';
 import { DashboardComponent } from './dashboard.component';
-import { SharedModule } from '../../shared/shared.module';
-import { CoreModule } from '../../core/core.module';
+import { SharedModule } from '../shared/shared.module';
+import { CoreModule } from '../core/core.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ApiInterceptor } from '../../core/interceptors/api.interceptor';
+import { ApiInterceptor } from '../core/interceptors/api.interceptor';
+import { TransactionComponent } from './components/transaction/transaction.component';
 
 
 @NgModule({
@@ -18,24 +19,19 @@ import { ApiInterceptor } from '../../core/interceptors/api.interceptor';
         CalendarComponent,
         OrganizerComponent,
         SelectorComponent,
+        TransactionComponent,
     ],
     imports: [
-        AppMaterialModule,
-        ReactiveFormsModule,
-        CommonModule,
         SharedModule,
-        CoreModule
+        // CommonModule
     ],
-    exports: [DashboardComponent,
-        CalendarComponent,
-        OrganizerComponent,
-        SelectorComponent],
-    bootstrap: [DashboardComponent],
+    exports: [DashboardComponent],
+    bootstrap: [],
     providers: [{
         provide: HTTP_INTERCEPTORS,
         useClass: ApiInterceptor,
         multi: true,
-    }]
+    }],
 })
 export class DashboardModule {}
 
