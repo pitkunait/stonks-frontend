@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
+import { AuthService } from '../../../core/auth/auth.service';
+import { TokenService } from '../../../core/services/token.service';
 
 
 export interface Transaction {
@@ -20,19 +21,20 @@ interface CreateResponse {
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
-    private url = 'http://192.168.150.72:8000/api/transactions/';
+    private url = 'transactions/';
 
 
-    constructor(public http: HttpClient, public authService: AuthService) {
+    constructor(public http: HttpClient,
+                public authService: AuthService,
+                private tokenService: TokenService,
+    ) {
 
     }
 
     load() {
         return this.http
             .get(this.url, {
-                headers: {
-                    Authorization: `Bearer ${this.authService.access}`,
-                },
+                headers: this.tokenService.getHeader(),
             });
     }
 

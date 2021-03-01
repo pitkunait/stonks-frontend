@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { TransactionService } from '../../core/services/transaction.service';
-
+import { TransactionService } from './services/transaction.service';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.scss'],
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class DashboardComponent implements OnInit {
+
 
     public assets: any = [];
 
@@ -19,5 +19,4 @@ export class HomeComponent implements OnInit {
 
         });
     }
-
 }

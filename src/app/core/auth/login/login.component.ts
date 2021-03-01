@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,13 +12,13 @@ export class LoginComponent implements OnInit {
     private formSubmitAttempt: boolean;
 
     constructor(
-        private fb: FormBuilder,
+        private formBuilder: FormBuilder,
         private authService: AuthService
     ) {}
 
     ngOnInit() {
-        this.form = this.fb.group({
-            userName: ['', Validators.required],
+        this.form = this.formBuilder.group({
+            username: ['', Validators.required],
             password: ['', Validators.required]
         });
     }

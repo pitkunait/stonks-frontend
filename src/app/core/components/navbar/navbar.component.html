@@ -6,6 +6,7 @@
             <span *ngIf="(authService.loggedIn | async); then thenBlock else elseBlock"></span>
             <ng-template #thenBlock>
                 Hello, gei!.
+                <button mat-button routerLink="dashboard">Dashboard</button>
                 <button mat-button (click)="authService.logout()">Logout</button>
             </ng-template>
             <ng-template #elseBlock>
