@@ -1,0 +1,23 @@
+<div class="container">
+    hello
+    <!--        <header>-->
+    <!--            <app-selector></app-selector>-->
+    <!--        </header>-->
+
+    <!--        <main>-->
+    <!--            <app-calendar></app-calendar>-->
+    <!--        </main>-->
+
+    <!--        <div>-->
+    <!--            <app-organizer></app-organizer>-->
+    <!--        </div>-->
+
+
+    <div *ngFor="let asset of transactions; index as i">
+        hello
+        {{i}}/{{transactions.length}}
+        . {{asset.id}} {{asset.asset}} {{asset.id}} {{asset.amount_crypto}} {{asset.amount_cash}} {{asset.date_of_transfer}}
+    </div>
+
+
+</div>

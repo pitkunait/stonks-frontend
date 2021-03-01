@@ -5,7 +5,9 @@ import { TokenService } from '../services/token.service';
 import { catchError, filter, finalize, switchMap, take } from 'rxjs/operators';
 
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class ApiInterceptor implements HttpInterceptor {
     private AUTH_HEADER = 'Authorization';
     private refreshTokenInProgress = false;

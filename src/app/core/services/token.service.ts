@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Token } from '../enums/token.enum';
-import { TokenPair } from '../interfaces/tokenPair';
+import { TokenPair } from '../interfaces/tokenPair.interface';
 
 
 @Injectable({

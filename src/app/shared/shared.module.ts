@@ -1,19 +1,32 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { MomentPipe } from './pipes/moment.pipe';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AppMaterialModule } from '../app-material.module';
-import { CoreModule } from '../core/core.module';
+import { AppMaterialModule } from './app-material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
     declarations: [
         MomentPipe,
     ],
-    exports: [
-        MomentPipe,
-        CoreModule
+    imports: [
+        CommonModule,
+        RouterModule,
+        AppMaterialModule,
+        ReactiveFormsModule,
+        FormsModule,
     ],
-    imports: [CoreModule],
+    exports: [
+        // modules
+        CommonModule,
+        RouterModule,
+        AppMaterialModule,
+        ReactiveFormsModule,
+        FormsModule,
+
+        // pipes
+        MomentPipe,
+    ],
 })
 export class SharedModule {}
