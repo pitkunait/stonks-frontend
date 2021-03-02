@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    baseUrl: 'http://0.0.0.0',
-    port: 8000,
+    baseUrl: 'https://stonkstracker.herokuapp.com/api',
+    port: 80,
 };
 
 /*

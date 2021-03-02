@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { RoundPipe } from './pipes/round.pipe';
+import { ChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { RoundPipe } from './pipes/round.pipe';
         AppMaterialModule,
         ReactiveFormsModule,
         FormsModule,
+        ChartsModule
     ],
     exports: [
         // modules
@@ -26,6 +28,7 @@ import { RoundPipe } from './pipes/round.pipe';
         AppMaterialModule,
         ReactiveFormsModule,
         FormsModule,
+        ChartsModule,
 
         // pipes
         MomentPipe,

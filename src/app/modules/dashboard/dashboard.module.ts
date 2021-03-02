@@ -7,6 +7,7 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { DashboardComponent } from './dashboard.component';
 import { RouterModule } from '@angular/router';
 import { dashboardRoutes } from './dashboard.routes';
+import { ChartComponent } from './chart/chart.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { dashboardRoutes } from './dashboard.routes';
         SelectorComponent,
         TransactionComponent,
         DashboardComponent,
+        ChartComponent,
     ],
     imports: [
         RouterModule.forChild(dashboardRoutes),

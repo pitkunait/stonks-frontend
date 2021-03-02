@@ -20,4 +20,17 @@ table {
 .total {
     align-items: center;
     text-align: center;
+    margin-bottom: 0!important;
+    margin-top: 0!important;
+}
+
+.mat-column-graph {
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
+    padding-right: 0 !important;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
 }
