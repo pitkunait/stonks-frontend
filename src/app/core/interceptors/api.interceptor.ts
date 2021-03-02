@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHandler, HttpInterceptor, HttpReques
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { TokenService } from '../services/token.service';
 import { catchError, filter, finalize, switchMap, take } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
@@ -57,7 +58,7 @@ export class ApiInterceptor implements HttpInterceptor {
 
     private refreshAccessToken(): Observable<any> {
         return this.httpClient
-            .post('http://0.0.0.0:8000/api/token/refresh/', { refresh: this.tokenService.getRefreshToken() });
+            .post(`${environment.baseUrl}token/refresh/`, { refresh: this.tokenService.getRefreshToken() });
     }
 
     private addAuthenticationToken(request: HttpRequest<any>): HttpRequest<any> {

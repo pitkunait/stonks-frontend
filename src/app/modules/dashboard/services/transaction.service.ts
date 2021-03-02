@@ -1,23 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Transaction } from '../../../core/interfaces/transaction.interface';
+import { ApiService } from '../../../core/services/api.service';
 
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
-    private url = 'http://0.0.0.0:8000/api/transactions/';
+    private url = 'transactions/';
 
-    constructor(public http: HttpClient) {
+    constructor(public apiService: ApiService) {
         this.loadTransactions();
     }
 
     loadTransactions(): Observable<any> {
-        return this.http
+        return this.apiService
             .get(this.url)
             .pipe(
-                map(this.mapTransactions)
+                map(this.mapTransactions),
             );
     }
 
@@ -27,6 +27,7 @@ export class TransactionService {
             amountCrypto: Number(i.amount_crypto),
             amountCash: Number(i.amount_cash),
             dateOfTransfer: i.date_of_transfer,
+            currentValue: i.current_value ? Number(i.current_value) : 0,
         }));
     }
 }

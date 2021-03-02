@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserLogin } from '../interfaces/userLogin.interface';
-import { HttpClient } from '@angular/common/http';
 import { TokenService } from './token.service';
 import { TokenPair } from '../interfaces/tokenPair.interface';
+import { ApiService } from './api.service';
+import { UserSignup } from '../interfaces/userSignup.interface';
 
 
 @Injectable({
@@ -12,12 +13,13 @@ import { TokenPair } from '../interfaces/tokenPair.interface';
 })
 export class AuthService {
     public loggedIn = new BehaviorSubject<boolean>(false);
-    private url = 'http://0.0.0.0:8000/api/token/';
+    private loginUrl = 'token/';
+    private signupUrl = 'register/';
 
     constructor(
-        private http: HttpClient,
         private router: Router,
         private tokenService: TokenService,
+        private apiService: ApiService,
     ) {
         if (this.tokenService.hasToken()) {
             this.loggedIn.next(true);
@@ -25,20 +27,32 @@ export class AuthService {
     }
 
     login(user: UserLogin) {
-        if (user.username !== '' && user.password !== '') {
-            this.http
-                .post(this.url, user)
-                .subscribe(async(res: TokenPair) => {
-                    this.tokenService.setTokenPair(res);
-                    this.loggedIn.next(true);
-                    await this.router.navigate(['/dashboard']);
-                });
-        }
+        this.apiService
+            .post(this.loginUrl, user)
+            .subscribe(async(res: TokenPair) => {
+                this.tokenService.setTokenPair(res);
+                this.loggedIn.next(true);
+                await this.router.navigate(['/dashboard']);
+            });
     }
 
-    async logout() {
+    signup(user: UserSignup) {
+        this.apiService
+            .post(this.signupUrl, {
+                username: user.username,
+                password: user.password,
+                first_name: user.firstName,
+                last_name: user.lastName,
+                email: user.email
+            })
+            .subscribe(async(res: any) => {
+                await this.router.navigate(['auth/login']);
+            });
+    }
+
+    logout() {
         this.loggedIn.next(false);
         this.tokenService.deleteTokens();
-        await this.router.navigate(['/login']);
+        this.router.navigate(['/auth/login']);
     }
 }

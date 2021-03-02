@@ -3,4 +3,5 @@ export interface Transaction {
     amountCrypto: number;
     amountCash: number;
     dateOfTransfer: string;
+    currentValue: number;
 }
