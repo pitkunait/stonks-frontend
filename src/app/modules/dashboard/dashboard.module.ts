@@ -18,6 +18,7 @@ import { TransactionComponent } from './transaction/transaction.component';
     imports: [
         SharedModule,
     ],
+    bootstrap: [DashboardComponent]
 })
 export class DashboardModule {}
 

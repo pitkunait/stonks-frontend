@@ -18,7 +18,6 @@ export class DashboardComponent implements OnInit {
         this.transactionService
             .loadTransactions()
             .subscribe(this.setTransactions);
-
     }
 
     private setTransactions(transactions) {
