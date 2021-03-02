@@ -1,0 +1,23 @@
+:host {
+    flex: 1;
+    display: flex;
+}
+
+table {
+    width: 100%;
+}
+
+.content {
+    padding: 20px;
+}
+
+.total-card {
+    justify-content: space-evenly;
+    align-items: center;
+    display: flex;
+    margin-bottom: 20px;
+}
+.total {
+    align-items: center;
+    text-align: center;
+}

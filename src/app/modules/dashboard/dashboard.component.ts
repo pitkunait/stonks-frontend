@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TransactionService } from './services/transaction.service';
+import { Transaction } from '../../core/interfaces/transaction.interface';
 
 
 @Component({
@@ -9,19 +10,18 @@ import { TransactionService } from './services/transaction.service';
 })
 export class DashboardComponent implements OnInit {
 
-
-    public transactions: any = [];
+    displayedColumns: string[] = ['asset', 'amountCash', 'amountCrypto', 'date', 'current', 'graph'];
+    transactions: Transaction[] = [];
 
     constructor(private transactionService: TransactionService) { }
 
     ngOnInit(): void {
         this.transactionService
             .loadTransactions()
-            .subscribe(this.setTransactions);
+            .subscribe((data) => this.setTransactions(data));
     }
 
     private setTransactions(transactions) {
         this.transactions = transactions;
-        console.log(this.transactions);
     }
 }

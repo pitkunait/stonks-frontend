@@ -4,11 +4,13 @@ import { AppMaterialModule } from './app-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { RoundPipe } from './pipes/round.pipe';
 
 
 @NgModule({
     declarations: [
         MomentPipe,
+        RoundPipe
     ],
     imports: [
         CommonModule,
@@ -27,6 +29,7 @@ import { RouterModule } from '@angular/router';
 
         // pipes
         MomentPipe,
+        RoundPipe
     ],
 })
 export class SharedModule {}

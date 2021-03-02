@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
-import { User } from '../interfaces/user.interface';
+import { UserLogin } from '../interfaces/userLogin.interface';
 import { HttpClient } from '@angular/common/http';
 import { TokenService } from './token.service';
 import { TokenPair } from '../interfaces/tokenPair.interface';
@@ -24,7 +24,7 @@ export class AuthService {
         }
     }
 
-    login(user: User) {
+    login(user: UserLogin) {
         if (user.username !== '' && user.password !== '') {
             this.http
                 .post(this.url, user)

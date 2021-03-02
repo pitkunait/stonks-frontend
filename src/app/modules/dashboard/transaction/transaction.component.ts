@@ -9,8 +9,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TransactionComponent implements OnInit {
 
     @Input() asset: string;
-    @Input() amoutCash: string;
-    @Input() amoutCrypto: string;
+    @Input() amoutCash: number;
+    @Input() amoutCrypto: number;
 
     constructor() { }
 

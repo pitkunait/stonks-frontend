@@ -3,7 +3,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { RouterModule } from '@angular/router';
-import { authRoutes as routes } from './auth.routes';
+import { authRoutes } from './auth.routes';
 
 
 @NgModule({
@@ -12,7 +12,7 @@ import { authRoutes as routes } from './auth.routes';
         SignupComponent,
     ],
     imports: [
-        RouterModule.forChild(routes),
+        RouterModule.forChild(authRoutes),
         SharedModule,
     ],
 })

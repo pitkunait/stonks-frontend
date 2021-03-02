@@ -1,5 +1,5 @@
-<div>
-    <p>{{ asset }}</p>
-    <p>{{ amoutCash }}</p>
-    <p>{{ amoutCrypto }}</p>
+<div class="transaction-card">
+    <p>Asset: {{ asset }}</p>
+    <p>Amount Cash: {{ amoutCash }}</p>
+    <p>Amount Crypto: {{ amoutCrypto | round:3 }}</p>
 </div>

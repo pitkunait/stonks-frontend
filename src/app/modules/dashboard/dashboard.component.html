@@ -1,27 +1,60 @@
-<!--<div class="container">-->
-<!--    hello-->
-<!--    &lt;!&ndash;        <header>&ndash;&gt;-->
-<!--    &lt;!&ndash;            <app-selector></app-selector>&ndash;&gt;-->
-<!--    &lt;!&ndash;        </header>&ndash;&gt;-->
+<div fxFlexFill class="content mat" fxLayout="column">
 
-<!--    &lt;!&ndash;        <main>&ndash;&gt;-->
-<!--    &lt;!&ndash;            <app-calendar></app-calendar>&ndash;&gt;-->
-<!--    &lt;!&ndash;        </main>&ndash;&gt;-->
+    <mat-card fxFlex="10" class="total-card  mat-elevation-z8">
 
-<!--    &lt;!&ndash;        <div>&ndash;&gt;-->
-<!--    &lt;!&ndash;            <app-organizer></app-organizer>&ndash;&gt;-->
-<!--    &lt;!&ndash;        </div>&ndash;&gt;-->
+        <div class="total">
+            <p>Total Invested:</p>
+            <h2>0</h2>
+            <small>haha bomzh</small>
+        </div>
 
-<!--    <li *ngFor="let item of transactions; index as i">...</li>-->
-<!--    <li *ngFor="let item of transactions; index as i">...</li>-->
-<!--    <li *ngFor="let item of transactions; index as i">...</li>-->
+        <div class="total">
+            <p>Current Value:</p>
+            <h2>0</h2>
+            <small>haha bomzh</small>
+        </div>
 
-<!--&lt;!&ndash;    &ndash;&gt;-->
-<!--&lt;!&ndash;    <div *ngFor="let asset of transactions; index as i">&ndash;&gt;-->
-<!--&lt;!&ndash;        hello&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;        {{i}}/{{transactions.length}}&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;        . {{asset.id}} {{asset.asset}} {{asset.id}} {{asset.amount_crypto}} {{asset.amount_cash}} {{asset.date_of_transfer}}&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+    </mat-card>
+
+    <div *ngIf="transactions.length > 0" fxFlex="90">
+        <table mat-table [dataSource]="transactions" class="mat-elevation-z8">
+            <ng-container matColumnDef="asset">
+                <th mat-header-cell *matHeaderCellDef> Asset </th>
+                <td mat-cell *matCellDef="let element"> {{element.asset}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="amountCrypto">
+                <th mat-header-cell *matHeaderCellDef> Amount Crypto </th>
+                <td mat-cell *matCellDef="let element"> {{element.amountCrypto}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="amountCash">
+                <th mat-header-cell *matHeaderCellDef> Amount Currency </th>
+                <td mat-cell *matCellDef="let element"> {{element.amountCash}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef> Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.dateOfTransfer}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="current">
+                <th mat-header-cell *matHeaderCellDef> Current Value </th>
+                <td mat-cell *matCellDef="let element"> {{element.dateOfTransfer}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="graph">
+                <th mat-header-cell *matHeaderCellDef> Graph </th>
+                <td mat-cell *matCellDef="let element"> {{element.dateOfTransfer}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+</div>
 
 
-<li *ngFor="let item of transactions; index as i">HELOONON</li>
+
+

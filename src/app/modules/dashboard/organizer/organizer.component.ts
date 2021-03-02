@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DateService } from '../../../core/services/date.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Transaction, TransactionService } from '../services/transaction.service';
+import {  TransactionService } from '../services/transaction.service';
 
 
 @Component({
@@ -12,7 +12,6 @@ import { Transaction, TransactionService } from '../services/transaction.service
 export class OrganizerComponent implements OnInit {
 
     form: FormGroup;
-    transactions: Transaction[] = [];
 
     constructor(public dateService: DateService,
                 public transactionService: TransactionService) { }
@@ -36,24 +35,24 @@ export class OrganizerComponent implements OnInit {
         });
     }
 
-    submit(): void {
-        const { title, amount } = this.form.value;
-        const transaction: Transaction = {
-            title,
-            amount,
-            date: this.dateService.date.value.format('DD-MM-YYYY'),
-        };
-        this.transactionService.create(transaction).subscribe(resp => {
-            this.transactions.push(resp);
-            this.form.reset();
-        }, error => {console.log(error); });
-    }
-
-    remove(transaction: Transaction): void {
-        this.transactionService.remove(transaction).subscribe(() => {
-            this.transactions = this.transactions.filter(t => t.id !== transaction.id);
-        }, error => {console.log(error); });
-    }
+    // submit(): void {
+    //     const { title, amount } = this.form.value;
+    //     const transaction: Transaction = {
+    //         title,
+    //         amount,
+    //         date: this.dateService.date.value.format('DD-MM-YYYY'),
+    //     };
+    //     this.transactionService.create(transaction).subscribe(resp => {
+    //         this.transactions.push(resp);
+    //         this.form.reset();
+    //     }, error => {console.log(error); });
+    // }
+    //
+    // remove(transaction: Transaction): void {
+    //     this.transactionService.remove(transaction).subscribe(() => {
+    //         this.transactions = this.transactions.filter(t => t.id !== transaction.id);
+    //     }, error => {console.log(error); });
+    // }
 
 }
 

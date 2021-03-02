@@ -27,7 +27,8 @@ export class ApiInterceptor implements HttpInterceptor {
 
         return next
             .handle(req)
-            .pipe(catchError((error: HttpErrorResponse) => {
+            .pipe(
+                catchError((error: HttpErrorResponse) => {
                     if (error && error.status === 401) {
                         if (this.refreshTokenInProgress) {
                             return this.refreshTokenSubject.pipe(
@@ -63,10 +64,10 @@ export class ApiInterceptor implements HttpInterceptor {
         if (!this.tokenService.hasToken()) {
             return request;
         }
-        // // If you are calling an outside domain then do not add the token.
         // if (!request.url.match(/www.mydomain.com\//)) {
         //     return request;
         // }
+
         console.log(`Setting token ${this.tokenService.getAccessToken()}`);
         return request.clone({
             headers: request.headers.set(this.AUTH_HEADER, 'Bearer ' + this.tokenService.getAccessToken()),
