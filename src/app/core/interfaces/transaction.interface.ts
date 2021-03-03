@@ -4,4 +4,6 @@ export interface Transaction {
     amountCash: number;
     dateOfTransfer: string;
     currentValue: number;
+    profitLoss: number;
+    timeSeries: any[];
 }

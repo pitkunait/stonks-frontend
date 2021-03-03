@@ -28,6 +28,8 @@ export class TransactionService {
             amountCash: Number(i.amount_cash),
             dateOfTransfer: i.date_of_transfer,
             currentValue: i.current_value ? Number(i.current_value) : 0,
+            profitLoss: i.current_value - Number(i.amount_cash),
+            timeSeries: [65, 59, 80, 81, 56, 55, i.current_value - Number(i.amount_cash)]
         }));
     }
 }
