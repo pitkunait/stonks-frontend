@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class TransactionService {
     private url = 'transactions/';
 
-    private yfUrl = 'https://query1.finance.yahoo.com/v7/finance/chart/';
+    private yfUrl = 'https://query1.finance.yahoo.com/v8/finance/chart/';
 
     constructor(private apiService: ApiService, private http: HttpClient) {
         this.loadTransactions();
