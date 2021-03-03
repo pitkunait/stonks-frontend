@@ -11,6 +11,7 @@ import { BaseChartDirective, Color, Label } from 'ng2-charts';
 export class ChartComponent implements OnInit {
 
     @Input() data: any[] = [];
+    @Input() labels: any[] = [];
     @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
 
     public lineChartType: ChartType = 'line';
@@ -47,7 +48,7 @@ export class ChartComponent implements OnInit {
 
     ngOnInit(): void {
         this.lineChartData = [{ data: this.data }];
-        this.lineChartLabels = this.data;
+        this.lineChartLabels = this.labels;
         if (this.data[this.data.length - 1] > 0) {
             this.setChartPositive();
         } else {

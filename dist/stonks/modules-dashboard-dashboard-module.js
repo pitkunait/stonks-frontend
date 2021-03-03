@@ -165,7 +165,7 @@ function DashboardComponent_div_19_td_22_Template(rf, ctx) { if (rf & 1) {
 } if (rf & 2) {
     const element_r23 = ctx.$implicit;
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵadvance"](1);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("data", element_r23.timeSeries);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵproperty"]("data", element_r23.timeSeries)("labels", element_r23.timeStamp);
 } }
 function DashboardComponent_div_19_tr_23_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](0, "tr", 20);
@@ -202,7 +202,7 @@ function DashboardComponent_div_19_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerStart"](20, 14);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](21, DashboardComponent_div_19_th_21_Template, 2, 0, "th", 7);
-    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](22, DashboardComponent_div_19_td_22_Template, 2, 1, "td", 8);
+    _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](22, DashboardComponent_div_19_td_22_Template, 2, 2, "td", 8);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementContainerEnd"]();
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](23, DashboardComponent_div_19_tr_23_Template, 1, 0, "tr", 15);
     _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](24, DashboardComponent_div_19_tr_24_Template, 1, 0, "tr", 16);
@@ -230,12 +230,13 @@ class DashboardComponent {
         this.transactionService
             .loadTransactions()
             .subscribe((response) => this.setTransactions(response));
-        // this.transactionService.getAssetData('BTC-EUR').subscribe(e => console.log(e))
     }
     setTransactions(transactions) {
-        console.log(transactions);
         if (transactions) {
             this.transactions = transactions;
+            this.totalInvested = 0;
+            this.totalCurrentValue = 0;
+            this.lossProfit = 0;
             transactions.forEach((i) => {
                 this.totalInvested += i.amountCash;
                 this.totalCurrentValue += i.currentValue;
@@ -245,7 +246,7 @@ class DashboardComponent {
     }
 }
 DashboardComponent.ɵfac = function DashboardComponent_Factory(t) { return new (t || DashboardComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](_services_transaction_service__WEBPACK_IMPORTED_MODULE_1__["TransactionService"])); };
-DashboardComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: DashboardComponent, selectors: [["app-dashboard"]], decls: 20, vars: 10, consts: [["fxFlexFill", "", "fxLayout", "column", 1, "content", "mat"], ["fxLayout", "row", 1, "total-card", "mat-elevation-z8"], [1, "total"], ["fxFlex", "1", 4, "ngIf"], ["fxFlex", "1"], ["mat-table", "", 1, "mat-elevation-z8", 3, "dataSource"], ["matColumnDef", "asset"], ["mat-header-cell", "", 4, "matHeaderCellDef"], ["mat-cell", "", 4, "matCellDef"], ["matColumnDef", "amountCrypto"], ["matColumnDef", "amountCash"], ["matColumnDef", "date"], ["matColumnDef", "current"], ["matColumnDef", "profitloss"], ["matColumnDef", "graph"], ["mat-header-row", "", 4, "matHeaderRowDef"], ["mat-row", "", 4, "matRowDef", "matRowDefColumns"], ["mat-header-cell", ""], ["mat-cell", ""], [3, "data"], ["mat-header-row", ""], ["mat-row", ""]], template: function DashboardComponent_Template(rf, ctx) { if (rf & 1) {
+DashboardComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: DashboardComponent, selectors: [["app-dashboard"]], decls: 20, vars: 10, consts: [["fxFlexFill", "", "fxLayout", "column", 1, "content", "mat"], ["fxLayout", "row", 1, "total-card", "mat-elevation-z8"], [1, "total"], ["fxFlex", "1", 4, "ngIf"], ["fxFlex", "1"], ["mat-table", "", 1, "mat-elevation-z8", 3, "dataSource"], ["matColumnDef", "asset"], ["mat-header-cell", "", 4, "matHeaderCellDef"], ["mat-cell", "", 4, "matCellDef"], ["matColumnDef", "amountCrypto"], ["matColumnDef", "amountCash"], ["matColumnDef", "date"], ["matColumnDef", "current"], ["matColumnDef", "profitloss"], ["matColumnDef", "graph"], ["mat-header-row", "", 4, "matHeaderRowDef"], ["mat-row", "", 4, "matRowDef", "matRowDefColumns"], ["mat-header-cell", ""], ["mat-cell", ""], [3, "data", "labels"], ["mat-header-row", ""], ["mat-row", ""]], template: function DashboardComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "mat-card", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 2);
@@ -596,6 +597,7 @@ __webpack_require__.r(__webpack_exports__);
 class ChartComponent {
     constructor() {
         this.data = [];
+        this.labels = [];
         this.lineChartType = 'line';
         this.lineChartData = [];
         this.lineChartLabels = [];
@@ -611,13 +613,22 @@ class ChartComponent {
                         display: false,
                     }],
             },
+            elements: {
+                point: {
+                    radius: 0,
+                },
+            },
+            tooltips: {
+                enabled: true,
+                displayColors: false,
+            },
             responsive: false,
         };
         this.lineChartColors = [];
     }
     ngOnInit() {
         this.lineChartData = [{ data: this.data }];
-        this.lineChartLabels = this.data;
+        this.lineChartLabels = this.labels;
         if (this.data[this.data.length - 1] > 0) {
             this.setChartPositive();
         }
@@ -659,10 +670,8 @@ ChartComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineCom
     } if (rf & 2) {
         let _t;
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵqueryRefresh"](_t = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵloadQuery"]()) && (ctx.chart = _t.first);
-    } }, inputs: { data: "data" }, decls: 1, vars: 5, consts: [["baseChart", "", "height", "80", 3, "datasets", "labels", "options", "colors", "chartType", "chartHover"]], template: function ChartComponent_Template(rf, ctx) { if (rf & 1) {
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "canvas", 0);
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵlistener"]("chartHover", function ChartComponent_Template_canvas_chartHover_0_listener($event) { return ctx.chartHovered($event); });
-        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementEnd"]();
+    } }, inputs: { data: "data", labels: "labels" }, decls: 1, vars: 5, consts: [["baseChart", "", "height", "80", 3, "datasets", "labels", "options", "colors", "chartType"]], template: function ChartComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelement"](0, "canvas", 0);
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵproperty"]("datasets", ctx.lineChartData)("labels", ctx.lineChartLabels)("options", ctx.lineChartOptions)("colors", ctx.lineChartColors)("chartType", ctx.lineChartType);
     } }, directives: [ng2_charts__WEBPACK_IMPORTED_MODULE_0__["BaseChartDirective"]], styles: ["\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJjaGFydC5jb21wb25lbnQuc2NzcyJ9 */"] });
@@ -684,18 +693,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "qCKp");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "fXoL");
 /* harmony import */ var _core_services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../core/services/api.service */ "qc5V");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
-
 
 
 
 
 class TransactionService {
-    constructor(apiService, http) {
+    constructor(apiService) {
         this.apiService = apiService;
-        this.http = http;
         this.url = 'transactions/';
-        this.yfUrl = 'https://query1.finance.yahoo.com/v7/finance/chart/';
         this.loadTransactions();
     }
     loadTransactions() {
@@ -704,23 +709,29 @@ class TransactionService {
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["switchMap"])((dat) => Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["forkJoin"])(dat.map(i => this.getAssetData(i)))));
     }
     getAssetData(asset) {
-        return this.http
-            .get(`${this.yfUrl}${asset.asset}`)
+        return this.apiService
+            .get('yahoo/', { asset: asset.asset })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["map"])((response) => {
+            const amountCrypto = Number(asset.amount_crypto);
+            const amountCash = Number(asset.amount_cash);
+            const currentValue = response.chart.result[0].meta.regularMarketPrice * amountCrypto;
+            const profitLoss = currentValue - amountCash;
+            const timeSeries = response.chart.result[0].indicators.quote[0].close
+                .filter(i => i).map(i => (i * amountCrypto) - amountCash);
             return {
+                amountCrypto,
+                amountCash,
+                currentValue,
+                profitLoss,
+                timeSeries,
                 asset: asset.asset,
-                amountCrypto: Number(asset.amount_crypto),
-                amountCash: Number(asset.amount_cash),
                 dateOfTransfer: asset.date_of_transfer,
-                profitLoss: response.chart.result.meta.regularMarketPrice - Number(asset.amount_cash),
-                currentValue: response.chart.result.meta.regularMarketPrice,
-                timeStamp: response.chart.result.timestamp,
-                timeSeries: response.chart.result.indicators.quote.close,
+                timeStamp: response.chart.result[0].timestamp,
             };
         }));
     }
 }
-TransactionService.ɵfac = function TransactionService_Factory(t) { return new (t || TransactionService)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_core_services_api_service__WEBPACK_IMPORTED_MODULE_3__["ApiService"]), _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])); };
+TransactionService.ɵfac = function TransactionService_Factory(t) { return new (t || TransactionService)(_angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵinject"](_core_services_api_service__WEBPACK_IMPORTED_MODULE_3__["ApiService"])); };
 TransactionService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵdefineInjectable"]({ token: TransactionService, factory: TransactionService.ɵfac, providedIn: 'root' });
 
 

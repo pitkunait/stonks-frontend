@@ -27,6 +27,9 @@ export class DashboardComponent implements OnInit {
     private setTransactions(transactions: Transaction[]) {
         if (transactions) {
             this.transactions = transactions;
+            this.totalInvested = 0;
+            this.totalCurrentValue = 0;
+            this.lossProfit = 0;
             transactions.forEach((i) => {
                     this.totalInvested += i.amountCash;
                     this.totalCurrentValue += i.currentValue;

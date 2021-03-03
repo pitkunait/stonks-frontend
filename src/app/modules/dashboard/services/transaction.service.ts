@@ -2,16 +2,13 @@ import { Injectable } from '@angular/core';
 import { map, switchMap } from 'rxjs/operators';
 import { forkJoin, Observable } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
-import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
     private url = 'transactions/';
 
-    private yfUrl = 'https://query1.finance.yahoo.com/v8/finance/chart/';
-
-    constructor(private apiService: ApiService, private http: HttpClient) {
+    constructor(private apiService: ApiService) {
         this.loadTransactions();
     }
 

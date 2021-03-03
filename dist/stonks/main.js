@@ -981,13 +981,14 @@ class ApiInterceptor {
         if (!this.tokenService.hasToken()) {
             return request;
         }
-        // if (!request.url.match(/www.mydomain.com\//)) {
-        //     return request;
-        // }
-        console.log(`Setting token ${this.tokenService.getAccessToken()}`);
-        return request.clone({
-            headers: request.headers.set(this.AUTH_HEADER, 'Bearer ' + this.tokenService.getAccessToken()),
-        });
+        if (request.url.match(_environments_environment__WEBPACK_IMPORTED_MODULE_2__["environment"].baseUrl)) {
+            console.log(`Setting token ${this.tokenService.getAccessToken()}`);
+            return request.clone({
+                headers: request.headers
+                    .set(this.AUTH_HEADER, 'Bearer ' + this.tokenService.getAccessToken())
+            });
+        }
+        return request;
     }
 }
 ApiInterceptor.ɵfac = function ApiInterceptor_Factory(t) { return new (t || ApiInterceptor)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_services_token_service__WEBPACK_IMPORTED_MODULE_4__["TokenService"]), _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_5__["HttpClient"])); };
@@ -1044,11 +1045,10 @@ CoreModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineInjecto
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ApiService", function() { return ApiService; });
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../environments/environment */ "AytR");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "qCKp");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ "fXoL");
-
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "qCKp");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
 
 
 
@@ -1059,24 +1059,24 @@ class ApiService {
         this.http = http;
     }
     formatErrors(error) {
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["throwError"])(error.error);
+        return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["throwError"])(error.error);
     }
-    get(path, params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]()) {
+    get(path, params = {}) {
         return this.http.get(`${_environments_environment__WEBPACK_IMPORTED_MODULE_0__["environment"].baseUrl}${path}`, { params })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.formatErrors));
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.formatErrors));
     }
     put(path, body = {}) {
-        return this.http.put(`${_environments_environment__WEBPACK_IMPORTED_MODULE_0__["environment"].baseUrl}${path}`, JSON.stringify(body)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.formatErrors));
+        return this.http.put(`${_environments_environment__WEBPACK_IMPORTED_MODULE_0__["environment"].baseUrl}${path}`, JSON.stringify(body)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.formatErrors));
     }
     post(path, body = {}) {
-        return this.http.post(`${_environments_environment__WEBPACK_IMPORTED_MODULE_0__["environment"].baseUrl}${path}`, JSON.stringify(body)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.formatErrors));
+        return this.http.post(`${_environments_environment__WEBPACK_IMPORTED_MODULE_0__["environment"].baseUrl}${path}`, JSON.stringify(body)).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.formatErrors));
     }
     delete(path) {
-        return this.http.delete(`${_environments_environment__WEBPACK_IMPORTED_MODULE_0__["environment"].baseUrl}${path}`).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.formatErrors));
+        return this.http.delete(`${_environments_environment__WEBPACK_IMPORTED_MODULE_0__["environment"].baseUrl}${path}`).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(this.formatErrors));
     }
 }
-ApiService.ɵfac = function ApiService_Factory(t) { return new (t || ApiService)(_angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
-ApiService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineInjectable"]({ token: ApiService, factory: ApiService.ɵfac, providedIn: 'root' });
+ApiService.ɵfac = function ApiService_Factory(t) { return new (t || ApiService)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])); };
+ApiService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineInjectable"]({ token: ApiService, factory: ApiService.ɵfac, providedIn: 'root' });
 
 
 /***/ }),
