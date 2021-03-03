@@ -28,6 +28,15 @@ export class ChartComponent implements OnInit {
                 display: false,
             }],
         },
+        elements: {
+            point: {
+                radius: 0,
+            },
+        },
+        tooltips: {
+            enabled: true,
+            displayColors: false,
+        },
         responsive: false,
     };
 

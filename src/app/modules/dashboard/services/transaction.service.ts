@@ -24,19 +24,27 @@ export class TransactionService {
     }
 
     getAssetData(asset: any) {
-        return this.http
-            .get(`${this.yfUrl}${asset.asset}`)
+        return this.apiService
+            .get('yahoo/', { asset: asset.asset })
             .pipe(
                 map((response: any) => {
+
+                    const amountCrypto = Number(asset.amount_crypto);
+                    const amountCash = Number(asset.amount_cash);
+                    const currentValue = response.chart.result[0].meta.regularMarketPrice * amountCrypto;
+                    const profitLoss = currentValue - amountCash;
+                    const timeSeries = response.chart.result[0].indicators.quote[0].close
+                        .filter(i => i).map(i => (i * amountCrypto) - amountCash);
+
                     return {
+                        amountCrypto,
+                        amountCash,
+                        currentValue,
+                        profitLoss,
+                        timeSeries,
                         asset: asset.asset,
-                        amountCrypto: Number(asset.amount_crypto),
-                        amountCash: Number(asset.amount_cash),
                         dateOfTransfer: asset.date_of_transfer,
-                        profitLoss: response.chart.result.meta.regularMarketPrice - Number(asset.amount_cash),
-                        currentValue: response.chart.result.meta.regularMarketPrice,
-                        timeStamp: response.chart.result.timestamp,
-                        timeSeries: response.chart.result.indicators.quote.close,
+                        timeStamp: response.chart.result[0].timestamp,
                     };
                 }),
             );

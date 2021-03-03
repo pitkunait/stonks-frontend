@@ -22,15 +22,9 @@ export class DashboardComponent implements OnInit {
         this.transactionService
             .loadTransactions()
             .subscribe((response: Transaction[]) => this.setTransactions(response));
-
-
-        // this.transactionService.getAssetData('BTC-EUR').subscribe(e => console.log(e))
     }
 
     private setTransactions(transactions: Transaction[]) {
-
-        console.log(transactions)
-
         if (transactions) {
             this.transactions = transactions;
             transactions.forEach((i) => {
