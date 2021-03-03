@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import { Transaction } from '../../../core/interfaces/transaction.interface';
+import { map, switchMap } from 'rxjs/operators';
+import { forkJoin, Observable } from 'rxjs';
 import { ApiService } from '../../../core/services/api.service';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({ providedIn: 'root' })
 export class TransactionService {
     private url = 'transactions/';
 
-    constructor(public apiService: ApiService) {
+    private yfUrl = 'https://query1.finance.yahoo.com/v7/finance/chart/';
+
+    constructor(private apiService: ApiService, private http: HttpClient) {
         this.loadTransactions();
     }
 
@@ -17,19 +19,27 @@ export class TransactionService {
         return this.apiService
             .get(this.url)
             .pipe(
-                map(this.mapTransactions),
+                switchMap((dat: any[]) => forkJoin(dat.map(i => this.getAssetData(i)))),
             );
     }
 
-    mapTransactions(response: any[]): Transaction[] {
-        return response.map(i => ({
-            asset: i.asset,
-            amountCrypto: Number(i.amount_crypto),
-            amountCash: Number(i.amount_cash),
-            dateOfTransfer: i.date_of_transfer,
-            currentValue: i.current_value ? Number(i.current_value) : 0,
-            profitLoss: i.current_value - Number(i.amount_cash),
-            timeSeries: [65, 59, 80, 81, 56, 55, i.current_value - Number(i.amount_cash)]
-        }));
+    getAssetData(asset: any) {
+        return this.http
+            .get(`${this.yfUrl}${asset.asset}`)
+            .pipe(
+                map((response: any) => {
+                    return {
+                        asset: asset.asset,
+                        amountCrypto: Number(asset.amount_crypto),
+                        amountCash: Number(asset.amount_cash),
+                        dateOfTransfer: asset.date_of_transfer,
+                        profitLoss: response.chart.result.meta.regularMarketPrice - Number(asset.amount_cash),
+                        currentValue: response.chart.result.meta.regularMarketPrice,
+                        timeStamp: response.chart.result.timestamp,
+                        timeSeries: response.chart.result.indicators.quote.close,
+                    };
+                }),
+            );
     }
+
 }
