@@ -1,23 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CalendarComponent } from './calendar/calendar.component';
-import { OrganizerComponent } from './organizer/organizer.component';
-import { SelectorComponent } from './selector/selector.component';
 import { SharedModule } from '../../shared/shared.module';
-import { TransactionComponent } from './transaction/transaction.component';
 import { DashboardComponent } from './dashboard.component';
 import { RouterModule } from '@angular/router';
 import { dashboardRoutes } from './dashboard.routes';
 import { ChartComponent } from './chart/chart.component';
+import { DialogComponent } from './dialog/dialog.component';
 
 
 @NgModule({
     declarations: [
-        CalendarComponent,
-        OrganizerComponent,
-        SelectorComponent,
-        TransactionComponent,
         DashboardComponent,
         ChartComponent,
+        DialogComponent,
     ],
     imports: [
         RouterModule.forChild(dashboardRoutes),

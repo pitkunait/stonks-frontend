@@ -1,4 +1,5 @@
 export interface Transaction {
+    id: number;
     asset: string;
     amountCrypto: number;
     amountCash: number;
